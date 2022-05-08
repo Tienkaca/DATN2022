@@ -1,8 +1,0 @@
-prefix=/home/ubuntu/DATN2022/uart_ws/devel
-
-Name: uart
-Description: Description of uart
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
