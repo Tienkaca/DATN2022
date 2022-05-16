@@ -1,0 +1,3 @@
+Config uart:
+"sudo raspi-config" : to enable uart interface
+"sudo chmod 666 /dev/ttys0" : enable port ttyS0
