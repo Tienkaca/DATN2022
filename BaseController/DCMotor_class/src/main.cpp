@@ -1,8 +1,7 @@
 #include <Arduino.h>
 #include <util/atomic.h>
-// Pins
-
 #include "DCMotor.h"
+#include "RingBuff.h"
 
 const int pwm[2] = {5,9};
 const int in1[2] = {6,10};
@@ -26,11 +25,14 @@ volatile long prevT_i[2]= {0};
 
 DCMotor m0(pwm[0],in1[0],in2[0],enA[0],enB[0],85);
 DCMotor m1(pwm[1],in1[1],in2[1],enA[1],enB[1],85);
-
+char c;
+int a = 0,b = 0;
+RingBuff buff(64) ;
+long prevT = 0;
 void ISR0();
 void ISR1();
 void setup() {
-  Serial.begin(76800);
+  Serial.begin(115200);
   m0.SetUp(ISR0);
   m0.SetVel(-30); 
   m1.SetUp(ISR1);
@@ -44,13 +46,26 @@ void loop() {
     m1.m_pos = pos_i[1];
     m1.m_rawVel = velocity_i[1];
   }
-  m0.Run();
-  m1.Run();
-  //m0.SetPwm(100);
-  // digitalWrite(in1[0],HIGH);
-  // digitalWrite(in2[0],LOW);
-  // analogWrite(pwm[0],100);
-  //Serial.println();
+  if(Serial.available())
+  {
+    c = Serial.read();
+    buff.Put_c(c);
+  }
+  if(millis() - prevT > 500)
+  {
+    prevT = millis();
+    const char* tempbuff = buff.Get_Frame();
+    //Serial.println(tempbuff);
+    sscanf(tempbuff,"%d,%d",&a,&b);
+    if(a && b)
+    {
+      m0.SetVel(a);
+      m1.SetVel(b);
+      Serial.print("m0 = ");Serial.print(a); Serial.print('\t');Serial.print("m1 = "); Serial.println(b);
+    }
+  }
+  // m0.Run();
+  // m1.Run();
 }
 
 void ISR0(){
