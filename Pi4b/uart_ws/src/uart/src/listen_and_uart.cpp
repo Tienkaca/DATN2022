@@ -29,7 +29,7 @@ void chatterCallback(const geometry_msgs::Twist::ConstPtr& msg)
 
 int main(int argc, char **argv)
 {
-  if((fd = serialOpen ("/dev/ttyS0", 115200)) < 0 )
+  if((fd = serialOpen ("/dev/ttyUSB0", 115200)) < 0 )
   {
     ROS_INFO("Unable to open serial port!!!");
   }
