@@ -15,8 +15,9 @@ void chatterCallback(const geometry_msgs::Twist::ConstPtr& msg)
     theta = msg->angular.z;
     float vLeft = vx + theta*l/2 ;
     float vRight = vx - theta*l/2;
-    float wL = vLeft/(r*2*3.14)*60;
-    float wR = vRight/(r*2*3.14)*60;
+    int wL = vLeft/(r*2*3.14)*60*100;
+    int wR = vRight/(r*2*3.14)*60*100;
+
     str = to_string(wL) + string(",") + to_string(wR) + string("|") ;
     ROS_INFO("I heard: [%s]", str.c_str());
     if(fd >=0)
