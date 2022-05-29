@@ -4,6 +4,8 @@
 #include <wiringSerial.h>
 using namespace std;
 int fd = -1;
+const float l = 0.3,r = 0.03;
+
 string str ="";
 float vx,vy,theta;
 void chatterCallback(const geometry_msgs::Twist::ConstPtr& msg)
@@ -11,7 +13,11 @@ void chatterCallback(const geometry_msgs::Twist::ConstPtr& msg)
     vx = msg->linear.x;
     vy = msg->linear.y;
     theta = msg->angular.z;
-      str = string("|") + to_string(vx) + string(";") + to_string(vy) + string(";") +to_string(theta)+ string("|") ;
+    float vLeft = vx + theta*l/2 ;
+    float vRight = vx - theta*l/2;
+    float wL = vLeft/(r*2*3.14)*60;
+    float wR = vRight/(r*2*3.14)*60;
+    str = to_string(wL) + string(",") + to_string(wR) + string("|") ;
     ROS_INFO("I heard: [%s]", str.c_str());
     if(fd >=0)
     {

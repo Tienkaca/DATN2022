@@ -26,7 +26,7 @@ volatile long prevT_i[2]= {0};
 DCMotor m0(pwm[0],in1[0],in2[0],enA[0],enB[0],85);
 DCMotor m1(pwm[1],in1[1],in2[1],enA[1],enB[1],85);
 char c;
-int a = 0,b = 0;
+float a = 0,b = 0;
 Frame buff ;
 long prevT = 0;
 void ISR0();
@@ -56,7 +56,7 @@ void loop() {
     prevT = millis();
     const char* tempbuff = buff.Get_Frame();
     Serial.println(tempbuff);
-    sscanf(tempbuff,"%d,%d",&a,&b);
+    sscanf(tempbuff,"%f,%f",&a,&b);
     if(a && b)
     {
       m0.SetVel(a);
