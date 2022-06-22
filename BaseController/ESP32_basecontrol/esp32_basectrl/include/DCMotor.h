@@ -14,8 +14,7 @@ public:
     DCMotor(unsigned int pwmPin, unsigned int in1Pin, unsigned int in2Pin, unsigned int enAPin, unsigned int enBPin, unsigned int ratio, float kp = 5, float ki = 10, float kd = 0);
     void SetUp(void (*isr)());
     void SetPwm(const int &pwm);
-    void SetAngulerVel(const float &vel);
-    void SetRPMVel(const float &vel);
+    void SetVel(const float &vel);
     void Run();
 };
 

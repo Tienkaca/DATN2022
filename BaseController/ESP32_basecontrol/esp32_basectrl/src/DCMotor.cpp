@@ -1,6 +1,6 @@
 #include "DCMotor.h"
 #include <Arduino.h>
-DCMotor::DCMotor(unsigned int pwmPin, unsigned int in1Pin, unsigned int in2Pin, unsigned int enAPin, unsigned int enBPin, unsigned int ratio, float kp = 5, float ki = 10, float kd = 0)
+DCMotor::DCMotor(unsigned int pwmPin, unsigned int in1Pin, unsigned int in2Pin, unsigned int enAPin, unsigned int enBPin, unsigned int ratio, float kp, float ki, float kd)
     : m_pwmPin(pwmPin), m_in1Pin(in1Pin), m_in2Pin(in2Pin), m_enAPin(enAPin), m_enBPin(enBPin), m_ratio(ratio),
       m_kp(kp), m_ki(ki), m_kd(kd)
 {
@@ -12,16 +12,13 @@ void DCMotor::SetUp(void (*isr)())
     pinMode(m_pwmPin, OUTPUT);
     pinMode(m_in1Pin, OUTPUT);
     pinMode(m_in2Pin, OUTPUT);
-    attachInterrupt(digitalPinToInterrupt(m_enAPin), isr, RISING);
+    // attachInterrupt(digitalPinToInterrupt(m_enAPin), isr, RISING);
+    attachInterrupt(m_enAPin, isr, RISING);
 }
 
-void DCMotor::SetRPMVel(const float &vel)
+void DCMotor::SetVel(const float &vel)
 {
     m_tarVel = vel;
-}
-void DCMotor::SetAngulerVel(const float &vel)
-{
-    m_tarVel = vel / (2 * 3.14) * 60;
 }
 void DCMotor::Run()
 {

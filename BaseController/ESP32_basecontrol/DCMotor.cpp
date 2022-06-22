@@ -15,13 +15,9 @@ void DCMotor::SetUp(void (*isr)())
     attachInterrupt(digitalPinToInterrupt(m_enAPin), isr, RISING);
 }
 
-void DCMotor::SetRPMVel(const float &vel)
+void DCMotor::SetVel(const float &vel)
 {
     m_tarVel = vel;
-}
-void DCMotor::SetAngulerVel(const float &vel)
-{
-    m_tarVel = vel / (2 * 3.14) * 60;
 }
 void DCMotor::Run()
 {

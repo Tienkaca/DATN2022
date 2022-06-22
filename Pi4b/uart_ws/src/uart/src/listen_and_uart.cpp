@@ -2,42 +2,67 @@
 #include "geometry_msgs/Twist.h"
 #include <wiringPi.h>
 #include <wiringSerial.h>
+#include <math.h>
+#define MAX_SPEED (1.7 * 3.14) // RPM
+#define L (0.176 / 2)
+#define R (0.065 / 2)
+
 using namespace std;
+float wL = 0;
+float wR = 0;
 int fd = -1;
-const float l = 0.3,r = 0.03;
 
-string str ="";
-float vx,vy,theta;
-void chatterCallback(const geometry_msgs::Twist::ConstPtr& msg)
+string str = "";
+float vx, vy, theta;
+float mapSpeed(float w);
+void calVel(float vx, float vy);
+float mapSpeed(float w)
 {
-    vx = msg->linear.x;
-    vy = msg->linear.y;
-    theta = msg->angular.z;
-    float vLeft = vx + theta*l/2 ;
-    float vRight = vx - theta*l/2;
-    int wL = vLeft/(r*2*3.14)*60*100;
-    int wR = vRight/(r*2*3.14)*60*100;
+  if (fabs(w) > MAX_SPEED)
+  {
+    if (w > 0)
+      return MAX_SPEED;
+    else if (w < 0)
+      return -MAX_SPEED;
+    else
+      return 0;
+  }
+  return w;
+}
+void calVel(float vx, float theta)
+{
+  wL = (vx - theta * L) / 2;
+  wR = (vx + theta * L) / 2;
+  wL = mapSpeed(wL) * 100;
+  wR = mapSpeed(wR) * 100;
+}
+void chatterCallback(const geometry_msgs::Twist::ConstPtr &msg)
+{
+  vx = msg->linear.x;
+  vy = msg->linear.y;
+  theta = msg->angular.z;
 
-    str = to_string(wL) + string(",") + to_string(wR) + string("|") ;
-    ROS_INFO("I heard: [%s]", str.c_str());
-    if(fd >=0)
-    {
-      serialPuts(fd, str.c_str());
-    }
-    
+  calVel(vx, theta); //
+
+  str = to_string((int)wL) + string(",") + to_string((int)wR) + string("|"); // anguler velocity rad/s
+  ROS_INFO("I heard: [%s]", str.c_str());
+  if (fd >= 0)
+  {
+    serialPuts(fd, str.c_str());
+  }
 }
 
 int main(int argc, char **argv)
 {
-  if((fd = serialOpen ("/dev/ttyUSB0", 115200)) < 0 )
+  if ((fd = serialOpen("/dev/ttyUSB0", 115200)) < 0)
   {
     ROS_INFO("Unable to open serial port!!!");
   }
-  
+
   ros::init(argc, argv, "listen_and_uart");
   ros::NodeHandle n;
   ros::Subscriber sub = n.subscribe("cmd_vel", 1000, chatterCallback);
   ros::spin();
-  serialClose (fd) ;
+  serialClose(fd);
   return 0;
 }
