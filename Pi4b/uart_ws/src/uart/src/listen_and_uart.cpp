@@ -31,16 +31,16 @@ float mapSpeed(float w)
 }
 void calVel(float vx, float theta)
 {
-  wL = (vx - theta * L) / 2;
-  wR = (vx + theta * L) / 2;
+  wL = (vx - theta * L) / R;
+  wR = (vx + theta * L) / R;
   wL = mapSpeed(wL) * 100;
   wR = mapSpeed(wR) * 100;
 }
 void chatterCallback(const geometry_msgs::Twist::ConstPtr &msg)
 {
-  vx = msg->linear.x;
+  vx = msg->linear.x/2.5;
   vy = msg->linear.y;
-  theta = msg->angular.z;
+  theta = 3*msg->angular.z;
 
   calVel(vx, theta); //
 
