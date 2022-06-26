@@ -1,0 +1,25 @@
+<launch>
+  <include file="$(find rplidar_ros)/launch/rplidar.launch" />
+  <node name="listenuart" pkg="uart"  type="listen_and_uart" />
+  <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
+    <param name="delta" value="0.1"/>
+    <param name="xmin" value="-2"/>
+    <param name="xmax" value="2"/>
+    <param name="ymin" value="-2"/>
+    <param name="ymax" value="2"/>
+    <param name="base_frame" value="base_link" />
+    <param name="map_udpate_interval" value="1.0"/>
+    <param name="linearUpdate" value="0.5"/>
+    <param name="angularUpdate" value="0.436"/>
+    <param name="temporalUpdate" value="-1.0"/>
+    <param name="resampleThreshold" value="0.5"/>
+    <param name="particles" value="80"/>
+    <!--param name="odom_frame" value="robot_1/odom"/-->
+  </node>
+    <include file="$(find uart)/launch/scanmatcher.launch" />
+  <!-- move_base -->
+  <!-- <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
+    <arg name="model" value="$(arg model)" />
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include> -->
+</launch>

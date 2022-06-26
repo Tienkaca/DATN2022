@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/DATN2022/Pi4b/uart_ws/devel
+
+Name: mpu6050
+Description: Description of mpu6050
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

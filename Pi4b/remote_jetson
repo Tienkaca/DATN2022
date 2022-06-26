@@ -1,0 +1,7 @@
+chmod o+rw /dev/ttyUSB0
+echo -ne '\033[2J' > /dev/ttyUSB0
+stty 115200 < /dev/ttyUSB0
+cat -v < /dev/ttyUSB0
+
+
+ssh ubuntu@192.168.0.139

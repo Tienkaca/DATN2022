@@ -1,0 +1,2 @@
+ros-mpu6050-node:rplidar_ros:uart
+-DCATKIN_DEVEL_PREFIX=/home/ubuntu/DATN2022/Pi4b/uart_ws/devel -DCMAKE_INSTALL_PREFIX=/home/ubuntu/DATN2022/Pi4b/uart_ws/install -G Unix Makefiles
