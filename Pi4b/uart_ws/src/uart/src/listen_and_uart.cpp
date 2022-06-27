@@ -3,7 +3,7 @@
 #include <wiringPi.h>
 #include <wiringSerial.h>
 #include <math.h>
-#define MAX_SPEED (1.7 * 3.14) // RPM
+#define MAX_SPEED (3.14) // rad/s
 #define L (0.176 / 2)
 #define R (0.065 / 2)
 
@@ -38,7 +38,7 @@ void calVel(float vx, float theta)
 }
 void chatterCallback(const geometry_msgs::Twist::ConstPtr &msg)
 {
-  vx = msg->linear.x/2.5;
+  vx = msg->linear.x;
   vy = msg->linear.y;
   theta = 3*msg->angular.z;
 
