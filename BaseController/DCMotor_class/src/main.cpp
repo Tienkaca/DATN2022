@@ -47,16 +47,11 @@ void loop()
     Serial.print(a);
     Serial.print('\t');
     Serial.println(b);
-    if (a != 0 && 0 != b)
-    {
-      Motor0.SetAngulerVel(((float)a) / 100);
-      Motor1.SetAngulerVel(-((float)b) / 100);
-    }
+    Motor0.SetAngulerVel(((float)a) / 100);
+    Motor1.SetAngulerVel(-((float)b) / 100);
   }
   Motor0.Run();
   Motor1.Run();
-  // Motor0.SetPwm(50);
-  // Motor1.SetPwm(50);
 }
 
 void ISR0()

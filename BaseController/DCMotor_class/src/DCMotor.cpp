@@ -47,8 +47,7 @@ void DCMotor::SetPwm(const int &pwm)
     int absPwm = abs(pwm);
     if (absPwm > 255)
         absPwm = 255;
-    analogWrite(m_pwmPin, pwm); // Motor speed
-
+    analogWrite(m_pwmPin, absPwm); // Motor speed
     if (pwm > 0)
     {
         // Turn one way
