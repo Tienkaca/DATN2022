@@ -1,0 +1,7 @@
+image: /home/ubuntu/DATN2022/Pi4b/uart_ws/src/uart/map/map.pgm
+resolution: 0.100000
+origin: [-14.800000, -14.800000, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

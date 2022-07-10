@@ -232,22 +232,22 @@ void TeleopTurtle::keyLoop()
     {
       case KEYCODE_LEFT:
         ROS_DEBUG("LEFT");
-        angular_ = 3.14;
+        angular_ = 0.6;
         dirty = true;
         break;
       case KEYCODE_RIGHT:
         ROS_DEBUG("RIGHT");
-        angular_ = -3.14;
+        angular_ = -0.6;
         dirty = true;
         break;
       case KEYCODE_UP:
         ROS_DEBUG("UP");
-        linear_ = 1.0/4;
+        linear_ = 1.0/16;
         dirty = true;
         break;
       case KEYCODE_DOWN:
         ROS_DEBUG("DOWN");
-        linear_ = -1.0/4;
+        linear_ = -1.0/16;
         dirty = true;
         break;
       case KEYCODE_Q:

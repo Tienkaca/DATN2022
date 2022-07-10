@@ -205,6 +205,6 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 add_executable(listen_and_uart src/listen_and_uart.cpp)
-target_link_libraries(listen_and_uart ${catkin_LIBRARIES})
+target_link_libraries(listen_and_uart ${catkin_LIBRARIES} -lwiringPi)
 add_executable(teleop src/teleop.cpp)
 target_link_libraries(teleop ${catkin_LIBRARIES})

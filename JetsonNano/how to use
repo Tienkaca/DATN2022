@@ -1,0 +1,5 @@
+xay dung map tao ban do (slam gmapping)
+=> chay file uart/launch/mapping.launch
+Sau khi tao ban do xong thi save map trong thu muc uart/map/
+Sau do sua dong sau theo ten file map vua luu  (thu muc uart/launch/amclmovebase.launch)
+<arg name="map_file" default="$(find uart)/map/map.yaml"/>	
