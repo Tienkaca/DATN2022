@@ -3,7 +3,7 @@
 #include <wiringPi.h>
 #include <wiringSerial.h>
 #include <math.h>
-#define MAX_SPEED (3.14) // rad/s
+#define MAX_SPEED (3.14*10) // rad/s
 #define L (0.176 / 2)
 #define R (0.065 / 2)
 
@@ -38,9 +38,12 @@ void calVel(float vx, float theta)
 }
 void chatterCallback(const geometry_msgs::Twist::ConstPtr &msg)
 {
-  vx = msg->linear.x;
-  vy = msg->linear.y;
-  theta = 3*msg->angular.z;
+  vx = -msg->linear.x;
+  vy = -msg->linear.y;
+  
+  theta = -(msg->angular.z);
+  ROS_INFO("VX = %f",vx);
+  ROS_INFO("Theta = %f",theta);
 
   calVel(vx, theta); //
 
